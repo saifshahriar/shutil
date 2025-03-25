@@ -1,0 +1,20 @@
+#!/usr/bin/mawk -f
+#
+# avg - average of input numbers
+#         Written using mawk (Unix/Linux).
+#
+# Usage: cat <file> | avg
+
+BEGIN {
+	sum = 0
+	cnt = 0
+}
+
+{
+	sum += $1
+	cnt++
+}
+
+END {
+	print sum / cnt
+}

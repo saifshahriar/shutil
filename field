@@ -1,0 +1,46 @@
+#!/usr/bin/mawk -f
+#
+# field - print a field.
+#         Written using mawk (Unix/Linux).
+#
+# Inspired from: https://www.brendangregg.com/Shell/field
+#
+# Usage: field fieldnum [fieldsep] [file...]
+# Example:
+#       $ field 3 : /etc/passwd
+#       $ ls -l | field 5
+
+BEGIN {
+    if (ARGC <= 1) {
+        print "Usage: field fieldnum [fieldsep] [file...]"
+        print "Example:"
+        print "\t" "field 3 : /etc/passwd"
+        print "\t" "ls -l | field 5"
+        exit 1
+    }
+
+    fieldnum = ARGV[1]
+    FS = " "  # Default to space as field separator
+
+    # Manually shift the arguments
+    for (i = 1; i < ARGC; i++) {
+        ARGV[i] = ARGV[i + 1]
+    }
+    ARGC--
+
+    # If there is a field separator argument, update FS
+    if (ARGC > 2) {
+        FS = ARGV[1]
+        for (i = 1; i < ARGC; i++) {
+            ARGV[i] = ARGV[i + 1]
+        }
+        ARGC--
+    }
+}
+
+{
+    # Only print if there are enough fields
+    if (NF >= fieldnum) {
+        print $fieldnum
+    }
+}

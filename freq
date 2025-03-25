@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# freq - frequency of input characters
+#
+# depends on:
+# - sort,
+# - uniq,
+# - trim []
+
+sort | uniq -c | sort -n | trim

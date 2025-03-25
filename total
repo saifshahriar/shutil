@@ -1,0 +1,18 @@
+#!/usr/bin/mawk -f
+#
+# total - sum of input numbers
+#         Written using mawk (Unix/Linux).
+#
+# Usage: cat nums.txt | total
+
+BEGIN {
+	sum = 0
+}
+
+{
+	sum += $1
+}
+
+END {
+	print sum
+}

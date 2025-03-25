@@ -1,0 +1,72 @@
+#!/bin/sh
+#
+# trim - Read lines from stdout and trim leading and/or trailing white-space.
+#
+# Author:  Saif Shahriar
+# Date:    2025-03-25
+# Version: 1.0.0
+#
+# Inspired from: https://github.com/dylanaraps/pure-sh-bible?tab=readme-ov-file#trim-leading-and-trailing-white-space-from-string
+#
+# Usage: cat whitespaces.txt | trim [-l] [-t]
+#
+#            -l or -s: Trim leading white-space
+#            -t or -e: Trim trailing white-space
+#
+# If no options are given, trim both leading and trailing white-space.
+
+ld=false
+tr=false
+ta=false
+
+# Parse options
+while getopts "lstea" opt; do
+	case $opt in
+		l|s)
+			ld=true
+			;;
+		t|e)
+			tr=true
+			;;
+		a) ta=true
+			;;
+		*)
+			echo "Usage: cat <file> | trim [-l] [-t]"
+			exit 1
+			;;
+	esac
+done
+
+# Shift to the string argument
+shift $((OPTIND - 1))
+
+# If no options are provided, trim both leading and trailing spaces
+if [ "$ld" = false ] && [ "$tr" = false ]; then
+	ld=true
+	tr=true
+fi
+
+while IFS= read -r line; do
+	# Remove leading white-space
+	if [ "$ld" = true ]; then
+		# shellcheck disable=SC2295
+		line=${line#${line%%[![:space:]]*}}
+	fi
+
+	# Remove trailing white-space
+	if [ "$tr" = true ]; then
+		# shellcheck disable=SC2295
+		line=${line%${line##*[![:space:]]}}
+	fi
+
+	# Output the trimmed line
+	if [ "$ta" = false ]; then
+		printf '%s\n' "$line"
+	else
+		set -f
+		# shellcheck disable=SC2048,SC2086
+		set -- $*
+		printf '%s\n' "$*"
+		set +f
+	fi
+done
