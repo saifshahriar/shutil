@@ -1,4 +1,4 @@
-# shutil: Shell Utilities
+# shutils: Shell Utilities
 
 Inspired by [coreutils](https://www.gnu.org/software/coreutils/).
 
