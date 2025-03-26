@@ -1,0 +1,31 @@
+#!/usr/bin/mawk -f
+#
+# Figure out the max number of given input
+#
+# $ cat data
+# 1
+# 2
+# 3
+# $ max < data
+# 3
+#
+# Set default field and separator if not provided
+BEGIN {
+    f = ARGV[1] ? ARGV[1] : 1      # Default field is 1
+    sep = ARGV[2] ? ARGV[2] : " "  # Default separator is space
+    max = ""
+}
+
+# Main processing logic
+{
+    if (length($f)) {
+        if (max == "" || $f > max) {
+            max = $f
+        }
+    }
+}
+
+# Print the result
+END {
+    print max
+}

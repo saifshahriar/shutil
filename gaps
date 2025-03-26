@@ -1,0 +1,28 @@
+#!/usr/bin/mawk -f
+#
+# Print gaps in numbers (inclusively)
+# http://stackoverflow.com/questions/15867557/finding-gaps-sequential-numbers
+#
+# $ cat data
+# 1
+# 2
+# 3
+# 6
+# 10
+#
+# $ cat data | gaps
+# [4, 5]
+# [7, 9]
+
+
+BEGIN {
+	p = 0
+}
+
+$1 != (p+1) {
+	print "[" p+1 ", " $1-1 "]"
+}
+
+{
+	p = $1
+}
