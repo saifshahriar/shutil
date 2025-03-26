@@ -17,7 +17,12 @@ Place the binaries in your path.
 
 - `avg`
 - `comma`
+- `eat`
 - `field`
 - `freq`
+- `gaps`
+- `max`
+- `min`
+- `summarize`
 - `total`
 - `trim`
